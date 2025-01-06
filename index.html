@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>School Mental Health Support</title>
+    <link rel="stylesheet" href="styles/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="assets/logo.png" alt="MindCare" class="logo">
+                <span class="brand-name">MindCare</span>
+            </div>
+            <div class="nav-links">
+                <a href="pages/home.html" class="nav-link active" target="mainContent">Home</a>
+                <a href="pages/about.html" class="nav-link" target="mainContent">About</a>
+                <a href="pages/services.html" class="nav-link" target="mainContent">Services</a>
+                <a href="pages/student-dashboard.html" class="nav-link" target="mainContent">Dashboard</a>
+                <a href="pages/book-appointment.html" class="nav-link" target="mainContent">Book Now</a>
+                <a href="pages/contact.html" class="nav-link" target="mainContent">Contact</a>
+            </div>
+            <div class="nav-actions" id="authButtons">
+                <a href="pages/register.html" class="btn btn-outline">Sign Up</a>
+                <a href="pages/login.html" class="btn btn-primary">Login</a>
+            </div>
+            <div class="nav-actions" id="userMenu" style="display: none;">
+                <div class="user-dropdown">
+                    <button class="btn btn-outline dropdown-toggle">
+                        <i class="fas fa-user"></i>
+                        <span id="userName">Student</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="pages/student-dashboard.html">Dashboard</a>
+                        <a href="pages/profile.html">Profile</a>
+                        <a href="#" id="logoutBtn">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="main-wrapper">
+        <iframe id="mainContent" name="mainContent" src="pages/home.html"></iframe>
+        <div class="footer">
+            <div class="footer-container">
+                <div class="footer-grid">
+                    <div class="footer-section">
+                        <h3>MindCare</h3>
+                        <p>Supporting student mental health and wellness through professional care and guidance.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Book Session</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Contact Info</h4>
+                        <ul class="contact-info">
+                            <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+                            <li><i class="fas fa-envelope"></i> support@mindcare.edu</li>
+                            <li><i class="fas fa-map-marker-alt"></i> 123 Campus Drive</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

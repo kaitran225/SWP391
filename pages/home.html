@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home - School Mental Health Support</title>
+    <link rel="stylesheet" href="../styles/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Mental Health Resources</h1>
+            <p class="hero-subtitle">Supporting Student Mental Health and Wellness</p>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="home-grid">
+            <!-- Quick Actions Section -->
+            <div class="quick-actions-section">
+                <h2>Quick Actions</h2>
+                <div class="quick-actions-grid">
+                    <a href="book-appointment.html" class="action-card">
+                        <i class="fas fa-calendar-check"></i>
+                        <h3>Book Session</h3>
+                        <p>Schedule a counseling session</p>
+                    </a>
+                    <a href="#" class="action-card">
+                        <i class="fas fa-phone-alt"></i>
+                        <h3>Emergency Help</h3>
+                        <p>24/7 Crisis Support</p>
+                    </a>
+                    <a href="#" class="action-card">
+                        <i class="fas fa-user-friends"></i>
+                        <h3>Support Groups</h3>
+                        <p>Join group sessions</p>
+                    </a>
+                    <a href="#" class="action-card">
+                        <i class="fas fa-book-reader"></i>
+                        <h3>Self-Help Resources</h3>
+                        <p>Access wellness materials</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Resources Section -->
+            <div class="resources-section">
+                <h2>Featured Resources</h2>
+                <div id="resourcesList" class="resources"></div>
+            </div>
+
+            <!-- Counselors Section -->
+            <div class="counselors-section">
+                <h2>Our Counselors</h2>
+                <div id="counselorsList"></div>
+            </div>
+
+            <!-- Wellness Tips Section -->
+            <div class="wellness-section">
+                <h2>Daily Wellness Tips</h2>
+                <div class="wellness-grid">
+                    <div class="wellness-card">
+                        <i class="fas fa-heart"></i>
+                        <h3>Mental Health</h3>
+                        <p>Practice mindfulness for 10 minutes daily</p>
+                    </div>
+                    <div class="wellness-card">
+                        <i class="fas fa-bed"></i>
+                        <h3>Sleep</h3>
+                        <p>Maintain a consistent sleep schedule</p>
+                    </div>
+                    <div class="wellness-card">
+                        <i class="fas fa-running"></i>
+                        <h3>Exercise</h3>
+                        <p>Stay active for at least 30 minutes</p>
+                    </div>
+                    <div class="wellness-card">
+                        <i class="fas fa-apple-alt"></i>
+                        <h3>Nutrition</h3>
+                        <p>Eat balanced, regular meals</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/scripts.js"></script>
+    <script>
+        async function displayResources(resources) {
+            const resourcesList = document.getElementById('resourcesList');
+            resourcesList.innerHTML = resources.map(resource => `
+                <div class="resource-card">
+                    <h3 class="resource-title">${resource.title}</h3>
+                    <span class="resource-category">${resource.category}</span>
+                    <p>${resource.description}</p>
+                    ${resource.schedule ? `<p><strong>Schedule:</strong> ${resource.schedule}</p>` : ''}
+                    ${resource.duration ? `<p><strong>Duration:</strong> ${resource.duration}</p>` : ''}
+                </div>
+            `).join('');
+        }
+
+        async function displayCounselors(counselors) {
+            const counselorsList = document.getElementById('counselorsList');
+            counselorsList.innerHTML = counselors.map(counselor => `
+                <div class="counselor-card">
+                    <h3>${counselor.name}</h3>
+                    <p><strong>Specialization:</strong> ${counselor.specialization}</p>
+                    <p><strong>Availability:</strong> ${counselor.availability}</p>
+                    <p><strong>Experience:</strong> ${counselor.experience}</p>
+                </div>
+            `).join('');
+        }
+
+        async function handleSearch() {
+            const searchQuery = document.getElementById('searchInput').value;
+            const resources = await MentalHealthDB.searchResources(searchQuery);
+            displayResources(resources);
+        }
+
+        async function handleCategoryFilter() {
+            const category = document.getElementById('categoryFilter').value;
+            const resources = await MentalHealthDB.filterByCategory(category);
+            displayResources(resources);
+        }
+
+        async function initializePage() {
+            try {
+                const resources = await MentalHealthDB.getResources();
+                const counselors = await MentalHealthDB.getCounselors();
+                
+                await displayResources(resources);
+                await displayCounselors(counselors);
+
+                document.getElementById('searchInput')
+                    .addEventListener('input', handleSearch);
+                document.getElementById('categoryFilter')
+                    .addEventListener('change', handleCategoryFilter);
+            } catch (error) {
+                console.error('Error initializing page:', error);
+            }
+        }
+
+        window.addEventListener('load', initializePage);
+    </script>
+</body>
+</html> 
