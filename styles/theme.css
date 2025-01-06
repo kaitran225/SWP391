@@ -825,3 +825,139 @@ h3 {
         grid-template-columns: 1fr;
     }
 }
+
+/* Dashboard Styles */
+.dashboard-grid {
+    width: 100%;
+    display: grid;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+/* Dashboard Metrics Section */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.metric-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 6px var(--mint-shadow);
+}
+
+.metric-card h3 {
+    color: var(--matcha-dark);
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.metric-card p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}
+
+/* Student List Section */
+.student-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 1.5rem;
+}
+
+.student-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px var(--mint-shadow);
+    transition: all 0.3s ease;
+}
+
+.student-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px var(--mint-shadow);
+}
+
+.student-card h3 {
+    color: var(--matcha-dark);
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* Health Indicators */
+.health-indicators {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.health-indicator {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.indicator-good {
+    background-color: #E3F5E6;
+    color: #2F7A39;
+}
+
+.indicator-warning {
+    background-color: #FFF4E5;
+    color: #B76E00;
+}
+
+.indicator-danger {
+    background-color: #FFE9E9;
+    color: #D12F2F;
+}
+
+/* Dashboard Controls */
+.dashboard-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--text-light);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.category-filter {
+    min-width: 150px;
+    padding: 0.75rem;
+    border: 1px solid var(--text-light);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+/* Dashboard Section Headers */
+.dashboard-grid h2 {
+    color: var(--matcha-dark);
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .metrics-grid,
+    .student-list {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-controls {
+        flex-direction: column;
+    }
+}
