@@ -258,7 +258,7 @@
             "counseling_history": [
                 {
                     "date": "2024-03-01",
-                    "type": "Regular Session",
+                    "type": "Regular Session",      
                     "notes": "Social integration support"
                 }
             ],
