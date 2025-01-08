@@ -6,30 +6,134 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container content">
-        <h2>Register</h2>
-        <form action="#" method="GET" class="mt-4">
-            <div class="form-group">
-                <label class="form-label">Username</label>
-                <input type="text" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Password</label>
-                <input type="password" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">User Type</label>
-                <select class="form-control" required>
-                    <option value="student">Student</option>
-                    <option value="parent">Parent</option>
-                </select>
-            </div>
-            <button type="submit" class="btn">Register</button>
-        </form>
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Create Account</h1>
+            <p class="hero-subtitle">Join our mental health support community</p>
+        </div>
     </div>
+
+    <div class="page-content">
+        <div class="auth-container">
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-type="student">Student</button>
+                <button class="auth-tab" data-type="parent">Parent</button>
+            </div>
+
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+
+                <div class="form-group student-field">
+                    <label class="form-label">Student ID</label>
+                    <input type="text" class="form-control" id="studentId">
+                </div>
+
+                <div class="form-group student-field">
+                    <label class="form-label">Grade</label>
+                    <select class="form-control" id="grade">
+                        <option value="">Select Grade</option>
+                        <option value="9th">9th Grade</option>
+                        <option value="10th">10th Grade</option>
+                        <option value="11th">11th Grade</option>
+                        <option value="12th">12th Grade</option>
+                    </select>
+                </div>
+
+                <div class="form-group parent-field" style="display: none;">
+                    <label class="form-label">Child's Student ID</label>
+                    <input type="text" class="form-control" id="childStudentId">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Create Account</button>
+
+                <p class="auth-footer">
+                    Already have an account? <a href="login.html">Login here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.auth-tab');
+            const form = document.getElementById('registerForm');
+            let userType = 'student';
+
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    userType = tab.dataset.type;
+
+                    // Toggle fields visibility
+                    document.querySelectorAll('.student-field').forEach(field => {
+                        field.style.display = userType === 'student' ? 'block' : 'none';
+                    });
+                    document.querySelectorAll('.parent-field').forEach(field => {
+                        field.style.display = userType === 'parent' ? 'block' : 'none';
+                    });
+
+                    // Update required fields
+                    document.getElementById('studentId').required = userType === 'student';
+                    document.getElementById('grade').required = userType === 'student';
+                    document.getElementById('childStudentId').required = userType === 'parent';
+                });
+            });
+
+            // Form submission
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    userType: userType
+                };
+
+                if (userType === 'student') {
+                    formData.studentId = document.getElementById('studentId').value;
+                    formData.grade = document.getElementById('grade').value;
+                } else {
+                    formData.childStudentId = document.getElementById('childStudentId').value;
+                }
+
+                try {
+                    // Here you would typically send the data to your server
+                    console.log('Registration data:', formData);
+                    
+                    // For demo purposes, store in localStorage
+                    localStorage.setItem('userType', userType);
+                    localStorage.setItem('userName', formData.name);
+                    localStorage.setItem('isLoggedIn', 'true');
+
+                    alert('Registration successful!');
+                    window.location.href = 'student-dashboard.html';
+                } catch (error) {
+                    alert('Registration failed. Please try again.');
+                    console.error('Registration error:', error);
+                }
+            });
+        });
+    </script>
 </body>
 </html> 

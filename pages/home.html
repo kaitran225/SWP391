@@ -95,6 +95,11 @@
                     <p>${resource.description}</p>
                     ${resource.schedule ? `<p><strong>Schedule:</strong> ${resource.schedule}</p>` : ''}
                     ${resource.duration ? `<p><strong>Duration:</strong> ${resource.duration}</p>` : ''}
+                    <div class="card-actions">
+                        <a href="book-appointment.html?type=resource&id=${resource.id}" class="btn btn-primary">
+                            <i class="fas fa-calendar-plus"></i> Book Now
+                        </a>
+                    </div>
                 </div>
             `).join('');
         }
@@ -107,6 +112,11 @@
                     <p><strong>Specialization:</strong> ${counselor.specialization}</p>
                     <p><strong>Availability:</strong> ${counselor.availability}</p>
                     <p><strong>Experience:</strong> ${counselor.experience}</p>
+                    <div class="card-actions">
+                        <a href="book-appointment.html?counselor=${counselor.id}" class="btn btn-primary">
+                            <i class="fas fa-calendar-check"></i> Book Session
+                        </a>
+                    </div>
                 </div>
             `).join('');
         }

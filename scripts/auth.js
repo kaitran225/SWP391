@@ -1,50 +1,27 @@
 const Auth = {
     init() {
-        this.checkAuthState();
-        this.setupLogoutHandler();
+        this.setupLoginHandler();
+        // Hide user dropdown initially
+        document.querySelector('.user-dropdown').style.display = 'none';
     },
 
-    checkAuthState() {
-        // This should check your actual authentication state
-        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-        const userType = localStorage.getItem('userType');
-        
-        if (isLoggedIn && userType === 'student') {
-            this.showAuthenticatedUI();
-        } else {
-            this.showUnauthenticatedUI();
+    setupLoginHandler() {
+        const loginBtn = document.getElementById('loginBtn');
+        if (loginBtn) {
+            loginBtn.addEventListener('click', (e) => {
+                // Show user dropdown
+                document.querySelector('.user-dropdown').style.display = 'block';
+                // Hide auth buttons
+                document.getElementById('authButtons').querySelector('.btn-outline').style.display = 'none';
+                document.getElementById('authButtons').querySelector('.btn-primary').style.display = 'none';
+                
+                // Set default user name
+                document.getElementById('userName').textContent = 'Emma Thompson';
+                
+                // Add student class to body
+                document.body.classList.add('is-student');
+            });
         }
-    },
-
-    showAuthenticatedUI() {
-        document.body.classList.add('is-student');
-        document.getElementById('authButtons').style.display = 'none';
-        document.getElementById('userMenu').style.display = 'block';
-        
-        // Set user name if available
-        const userName = localStorage.getItem('userName') || 'Student';
-        document.getElementById('userName').textContent = userName;
-    },
-
-    showUnauthenticatedUI() {
-        document.body.classList.remove('is-student');
-        document.getElementById('authButtons').style.display = 'flex';
-        document.getElementById('userMenu').style.display = 'none';
-    },
-
-    setupLogoutHandler() {
-        document.getElementById('logoutBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            this.logout();
-        });
-    },
-
-    logout() {
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('userType');
-        localStorage.removeItem('userName');
-        this.showUnauthenticatedUI();
-        window.location.href = 'pages/home.html';
     }
 };
 

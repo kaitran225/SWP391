@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Profile - MindCare</title>
+    <link rel="stylesheet" href="../styles/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">My Profile</h1>
+            <p class="hero-subtitle">Track Your Mental Health Journey</p>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-info">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="profile-details">
+                        <h2 id="userName">Loading...</h2>
+                        <p id="userDetails">Student ID: Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-section">
+                <h3>Last 30 Days Overview</h3>
+                <div class="chart-container">
+                    <canvas id="mentalHealthChart"></canvas>
+                </div>
+            </div>
+
+            <div class="recent-appointments">
+                <h3>Recent Appointments</h3>
+                <div id="appointmentsList" class="appointments-grid">
+                    <!-- Appointments will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadUserData() {
+            try {
+                const response = await fetch('../data/user-history.json');
+                const data = await response.json();
+                const userData = data.STU001; // In real app, use actual user ID
+
+                // Update profile info
+                document.getElementById('userName').textContent = userData.name;
+                document.getElementById('userDetails').textContent = `Student ID: STU001`;
+
+                // Create chart
+                const ctx = document.getElementById('mentalHealthChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: userData.last30Days.dates,
+                        datasets: [
+                            {
+                                label: 'Anxiety Level',
+                                data: userData.last30Days.anxiety_levels,
+                                borderColor: '#4A7C59',
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Stress Level',
+                                data: userData.last30Days.stress_levels,
+                                borderColor: '#9EC5AB',
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Sleep Quality',
+                                data: userData.last30Days.sleep_quality,
+                                borderColor: '#C8D5B9',
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Mental Health Trends'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                min: 0,
+                                max: 10
+                            }
+                        }
+                    }
+                });
+
+                // Display appointments
+                const appointmentsList = document.getElementById('appointmentsList');
+                appointmentsList.innerHTML = userData.appointments.map(apt => `
+                    <div class="appointment-card">
+                        <div class="appointment-date">${new Date(apt.date).toLocaleDateString()}</div>
+                        <h4>${apt.counselor}</h4>
+                        <p class="appointment-type">${apt.type}</p>
+                        <p class="appointment-notes">${apt.notes}</p>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadUserData);
+    </script>
+</body>
+</html> 
